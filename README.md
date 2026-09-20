@@ -11,6 +11,20 @@ Dark navy SoloStack UI. Data stays on-device (`localStorage`) with JSON export/i
 | **Stack** | Vite + React + TypeScript · Electron · Capacitor |
 | **Compliance** | Personal organizer only — no career/legal advice, no outcome guarantees |
 
+## After cloning this repo
+
+Full `src/App.tsx` + `src/components/Forms.tsx` ship as base64 parts (MCP size limits on push):
+
+```bash
+bash scripts/decode-sources.sh   # restores App.tsx + Forms.tsx
+npm install
+npm run dev
+```
+
+Complete working tree (decoded sources + built artifacts) is on the build box:
+
+`/workspace/money-maker/apps/job-search-os/`
+
 ## Run from source
 
 ```bash
@@ -22,7 +36,7 @@ npm run electron:dev        # desktop shell
 
 ## Built artifacts (on the build box)
 
-Exact paths after the 2026-09-20 ship:
+Exact paths after the 2026-09-20 (PT / Auckland) ship:
 
 | Platform | Path | Notes |
 | --- | --- | --- |
@@ -56,37 +70,20 @@ See `BUILD-WINDOWS.md` for cross-compile / GitHub Actions.
 ## Android (Capacitor)
 
 ```bash
-export JAVA_HOME=/opt/jdk-17          # or your JDK 17+
+export JAVA_HOME=/opt/jdk-17
 export ANDROID_HOME=$HOME/Android/Sdk
-./scripts/setup-android.sh            # once
+./scripts/setup-android.sh
 npm run android:build
-# APK: android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ## iOS / .ipa
 
 **Not built here.** Needs Apple Developer Program + macOS + Xcode. Stub: `ios-stub/README.md`.
 
-```bash
-# On a Mac:
-npx cap add ios && npx cap sync ios && npx cap open ios
-```
-
 ## Compliance
 
-See `COMPLIANCE.txt`. Sample companies/contacts are fictional. Offer scores are subjective comparison aids only — not financial advice.
-
-## Schema
-
-Implements the five DBs from SoloStack Job Search OS product schema (`SCHEMA.md` in the product pack): Applications, Follow-ups, Interviews, Offers, Contacts.
-
-## Scripts
-
-| Script | Purpose |
-| --- | --- |
-| `scripts/setup-android.sh` | JDK/SDK + `cap add android` |
-| `scripts/build-all.sh` | Web + AppImage + APK (+ Windows attempt) |
+See `COMPLIANCE.txt`. Sample data is fictional. Offer scores are subjective comparison aids only.
 
 ## License
 
-UNLICENSED / proprietary SoloStack. Customers may customize for personal job-search use.
+UNLICENSED / proprietary SoloStack.
