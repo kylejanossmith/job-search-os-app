@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { LicenseGate } from './components/LicenseGate';
 import './styles.css';
+import './license-gate.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
