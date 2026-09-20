@@ -1,0 +1,16 @@
+node_modules/
+dist/web/
+dist/desktop/
+dist/*.AppImage
+dist/*.apk
+dist/*.zip
+dist/*.exe
+android/.gradle/
+android/**/build/
+android/local.properties
+android/app/src/main/assets/public/
+*.log
+.DS_Store
+.idea/
+.vscode/
+release/

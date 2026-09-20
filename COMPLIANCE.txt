@@ -1,0 +1,12 @@
+SoloStack — Job Search OS (App)
+Compliance notice
+
+1. English-language personal organization product.
+2. NOT career counseling, recruiting services, legal advice, or immigration advice.
+3. NO guarantees of interviews, offers, employment, or salary outcomes.
+4. Sample company names and contacts are fictional for demonstration.
+5. Offer Base/Bonus/Remote/Growth scores are subjective personal comparison aids only — not financial, tax, or career advice.
+6. Verify all compensation and employment terms in writing with the employer.
+7. Data is stored locally on device (localStorage). You are responsible for backups.
+
+(c) SoloStack. All rights reserved.
