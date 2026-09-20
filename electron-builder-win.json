@@ -1,0 +1,12 @@
+{
+  "extends": null,
+  "appId": "com.solostack.jobsearchos",
+  "productName": "SoloStack Job Search OS",
+  "directories": { "output": "dist/desktop" },
+  "files": ["dist/web/**/*", "electron/**/*", "package.json"],
+  "win": {
+    "target": ["dir"],
+    "signAndEditExecutable": false,
+    "artifactName": "SoloStack-Job-Search-OS-${version}-win-${arch}.${ext}"
+  }
+}
