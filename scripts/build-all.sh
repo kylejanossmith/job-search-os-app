@@ -19,8 +19,41 @@ npx electron-builder --linux AppImage --publish never || {
 mkdir -p dist
 find dist/desktop -name '*.AppImage' -exec cp -v {} dist/ \; 2>/dev/null || true
 
+echo "==> Windows unpacked (dir target, no Wine)"
+npx electron-builder --win dir --x64 --config electron-builder-win.json --publish never || {
+  echo "WARN: Windows dir build failed"
+}
+if [ -d dist/desktop/win-unpacked ]; then
+  python3 - <<'PY'
+import zipfile, os
+from pathlib import Path
+src = Path("dist/desktop/win-unpacked")
+out = Path("dist/SoloStack-Job-Search-OS-1.0.0-win-x64-unpacked.zip")
+if out.exists(): out.unlink()
+with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
+    for root, dirs, files in os.walk(src):
+        for f in files:
+            p = Path(root) / f
+            arc = Path("win-unpacked") / p.relative_to(src)
+            zf.write(p, arc.as_posix())
+print("Wrote", out)
+PY
+  echo "Wrote dist/SoloStack-Job-Search-OS-1.0.0-win-x64-unpacked.zip"
+  cat > dist/WINDOWS-README.txt << 'W'
+Windows build (cross-compiled from Linux without Wine)
+======================================================
+Extract SoloStack-Job-Search-OS-1.0.0-win-x64-unpacked.zip
+Then run: win-unpacked/SoloStack Job Search OS.exe
+
+For a single-file portable .exe, build on Windows or Linux+Wine:
+  npm run electron:build:win
+See BUILD-WINDOWS.md in the repo root.
+W
+fi
+
 echo "==> Android debug APK"
 if [ -d android ] && [ -x android/gradlew ]; then
+  npx cap sync android || true
   (cd android && ./gradlew assembleDebug) || echo "WARN: gradle assembleDebug failed"
   APK="android/app/build/outputs/apk/debug/app-debug.apk"
   if [ -f "$APK" ]; then
@@ -30,11 +63,5 @@ else
   echo "WARN: android project missing — run scripts/setup-android.sh first"
 fi
 
-echo "==> Try Windows portable (may need Wine)"
-npx electron-builder --win portable --x64 --publish never || {
-  echo "WARN: Windows build failed (expected without Wine). Documented in README."
-}
-find dist/desktop -name '*.exe' -exec cp -v {} dist/ \; 2>/dev/null || true
-
 echo "==> Done. Artifacts:"
-ls -lah dist/ || true
+ls -lah dist/*.AppImage dist/*.apk dist/*.zip dist/WINDOWS-README.txt 2>/dev/null || ls -lah dist/ || true
